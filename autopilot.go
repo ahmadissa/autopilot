@@ -24,18 +24,27 @@ type Respond struct {
 
 //Contact - autopilot contact object
 type Contact struct {
-	ContactID  string    `json:"contact_id"`
-	FirstName  string    `json:"FirstName"`
-	LastName   string    `json:"LastName"`
-	Type       string    `json:"type"`
-	Email      string    `json:"Email"`
-	Phone      string    `json:"Phone"`
-	CreatedAt  time.Time `json:"created_at"`
-	UpdatedAt  time.Time `json:"updated_at"`
-	LeadSource string    `json:"LeadSource"`
-	Status     string    `json:"Status"`
-	Company    string    `json:"Company"`
-	Lists      []string  `json:"lists"`
+	ContactID    string            `json:"contact_id"`
+	FirstName    string            `json:"FirstName"`
+	LastName     string            `json:"LastName"`
+	Type         string            `json:"type"`
+	Email        string            `json:"Email"`
+	Phone        string            `json:"Phone"`
+	CreatedAt    time.Time         `json:"created_at"`
+	UpdatedAt    time.Time         `json:"updated_at"`
+	LeadSource   string            `json:"LeadSource"`
+	Status       string            `json:"Status"`
+	Company      string            `json:"Company"`
+	Custom       map[string]string `json:"custom"`
+	CustomFields []CustomField     `json:"custom_fields"`
+	Lists        []string          `json:"lists"`
+}
+
+type CustomField struct {
+	Kind      string      `json:"kind"`
+	FieldType string      `json:"fieldType"`
+	Value     interface{} `json:"value"`
+	Deleted   bool        `json:"deleted"`
 }
 
 //ATError - autopilot error resp
@@ -72,7 +81,7 @@ func do(method string, url string, data interface{}) (res Respond, err error) {
 	if err != nil {
 		return
 	}
-
+	//println(string(respBody))
 	if resp.StatusCode == 200 {
 		contact := Contact{}
 		err = json.Unmarshal(respBody, &contact)

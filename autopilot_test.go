@@ -82,3 +82,37 @@ func TestUpdate(t *testing.T) {
 	}
 
 }
+
+func TestCustomField(t *testing.T) {
+
+	contact := Contact{
+		Email:     "issa.ahmd@gmail.com",
+		FirstName: "Ahmad",
+		LastName:  "Issa",
+	}
+	contact.Custom = make(map[string]string)
+	contact.Custom["integer--displays"] = "2"
+	res, err := Put(contact)
+	if err != nil {
+		t.Error(err.Error())
+		return
+	}
+	res, err = Get("issa.ahmd@gmail.com")
+	if err != nil {
+		t.Error(err.Error())
+		return
+	}
+	var displayFound = false
+	for _, v := range res.Contact.CustomFields {
+		if v.Kind == "displays" {
+			displayFound = true
+			if v.Value.(float64) != 2 {
+				t.Error("displays should be '2'")
+			}
+		}
+	}
+	if !displayFound {
+		t.Error("displays custom field not found")
+	}
+
+}
