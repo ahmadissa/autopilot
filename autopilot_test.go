@@ -16,7 +16,7 @@ func TestInit(t *testing.T) {
 
 func TestAddContact(t *testing.T) {
 	contact := Contact{
-		Email:     "issa.ahmd@gmail.com",
+		Email:     "xxxx@gmail.com",
 		FirstName: "Ahmad",
 		LastName:  "Issa",
 	}
@@ -32,7 +32,7 @@ func TestAddContact(t *testing.T) {
 
 func TestGetContact(t *testing.T) {
 
-	res, err := Get("issa.ahmd@gmail.com")
+	res, err := Get("xxxx@gmail.com")
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -63,7 +63,7 @@ func TestNotFound(t *testing.T) {
 func TestUpdate(t *testing.T) {
 
 	contact := Contact{
-		Email:     "issa.ahmd@gmail.com",
+		Email:     "xxxx@gmail.com",
 		FirstName: "Ahmad",
 		LastName:  "We Have Changed your name",
 	}
@@ -72,7 +72,7 @@ func TestUpdate(t *testing.T) {
 		t.Error(err.Error())
 		return
 	}
-	res, err = Get("issa.ahmd@gmail.com")
+	res, err = Get("xxxx@gmail.com")
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -83,10 +83,11 @@ func TestUpdate(t *testing.T) {
 
 }
 
+//
 func TestCustomField(t *testing.T) {
 
 	contact := Contact{
-		Email:     "issa.ahmd@gmail.com",
+		Email:     "xxxx@gmail.com",
 		FirstName: "Ahmad",
 		LastName:  "Issa",
 	}
@@ -97,7 +98,7 @@ func TestCustomField(t *testing.T) {
 		t.Error(err.Error())
 		return
 	}
-	res, err = Get("issa.ahmd@gmail.com")
+	res, err = Get("xxxx@gmail.com")
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -113,6 +114,15 @@ func TestCustomField(t *testing.T) {
 	}
 	if !displayFound {
 		t.Error("displays custom field not found")
+	}
+
+}
+
+func TestAddToList(t *testing.T) {
+
+	err := AddToList("xxxx@gmail.com", "contactlist_xxxxx")
+	if err != nil {
+		t.Error(err.Error())
 	}
 
 }

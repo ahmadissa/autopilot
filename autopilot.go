@@ -55,6 +55,7 @@ type ATError struct {
 
 var apiKey = ""
 var baseURL = "https://api2.autopilothq.com/v1/contact"
+var listBaseURL = "https://api2.autopilothq.com/v1/list"
 
 //do send data to auto pilot and return a contact object or error
 func do(method string, url string, data interface{}) (res Respond, err error) {
@@ -113,6 +114,16 @@ func Put(contact Contact) (res Respond, err error) {
 func Get(emailOrID string) (res Respond, err error) {
 	url := baseURL + "/" + emailOrID
 	return do("GET", url, nil)
+}
+
+func AddToList(idOrEmail, listID string) error {
+	//https://api2.autopilothq.com/v1/list/list_id/contact/contact_id_or_email
+	url := listBaseURL + "/" + listID + "/contact/" + idOrEmail
+	_, err := do("POST", url, nil)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 //Init set Autopilot api key
